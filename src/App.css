@@ -56,7 +56,7 @@ textarea {
 }
 
 .DiaryItem .info {
-    border-bottom: 1px solid gray;
+    border-bottom: 1px solid rgb(204, 204, 204);
     padding-bottom: 10px;
     margin-bottom: 10px;
 }
