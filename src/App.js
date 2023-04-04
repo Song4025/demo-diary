@@ -1,14 +1,13 @@
-import React,{ useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import DiaryEditor from "./DiaryEditor";
 import DiaryList from "./DiaryList";
 import "./App.css";
 
 function App() {
-
     // id생성
     const dataId = useRef(1);
 
-    const [data, setData] = useState([]); 
+    const [data, setData] = useState([]);
 
     // App.js에서 데이터 값 추가시 2개 컴포넌트에 데이터를 전달하기 위해 onCreate함수를 만든다.
     const onCreate = (author, content, emotion) => {
@@ -19,23 +18,28 @@ function App() {
             content,
             emotion,
             created_date,
-            id: dataId.current
-        }
+            id: dataId.current,
+        };
         dataId.current += +1;
         setData([newItem, ...data]);
     };
 
-    //item 삭제하기
-    const onDelete = (targetId) => {
+    // item 삭제하기
+    const onRemove = (targetId) => {
         const newDiaryList = data.filter((it) => it.id !== targetId);
         console.log("newDiaryList", newDiaryList);
         setData(newDiaryList);
-    }
+    };
+
+    // 수정하기
+    const onEdit = (targetId, newContent) => {
+        setData(data.map((it) => (it.id === targetId ? { ...it, content: newContent } : it)));
+    };
 
     return (
         <div className="App">
             <DiaryEditor onCreate={onCreate} />
-            <DiaryList diaryList={data} onDelete={onDelete} />
+            <DiaryList diaryList={data} onRemove={onRemove} onEdit={onEdit} />
         </div>
     );
 }
